@@ -2,7 +2,7 @@
 
 API tidak resmi saweria.co yang dapat membuat dan memeriksa kode QRIS secara otomatis
 
-[![NPM Version](https://img.shields.io/npm/v/qris-saweria.svg)](https://www.npmjs.com/package/saweria-qris)
+[![NPM Version](https://img.shields.io/npm/v/qris-saweria.svg)](https://www.npmjs.com/package/qris-saweria)
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://github.com/AutoFTbot/saweria-qris/blob/master/LICENSE)
 
 ## Fitur
