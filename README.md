@@ -2,8 +2,8 @@
 
 API tidak resmi saweria.co yang dapat membuat dan memeriksa kode QRIS secara otomatis
 
-[![NPM Version](https://img.shields.io/npm/v/saweria-qris.svg)](https://www.npmjs.com/package/saweria-qris)
-[![License](https://img.shields.io/npm/l/saweria-qris.svg)](https://github.com/AutoFTbot/saweria-qris/blob/master/LICENSE)
+[![NPM Version](https://img.shields.io/npm/v/qris-saweria.svg)](https://www.npmjs.com/package/saweria-qris)
+[![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://github.com/AutoFTbot/saweria-qris/blob/master/LICENSE)
 
 ## Fitur
 
@@ -16,18 +16,18 @@ API tidak resmi saweria.co yang dapat membuat dan memeriksa kode QRIS secara oto
 ## Instalasi
 
 ```bash
-npm install saweria-qris
+npm install qris-saweria
 ```
 
 ## Mulai Cepat
 
 ```javascript
-const saweriaQris = require('saweria-qris');
+const saweriaQris = require('qris-saweria')
 
 // Membuat kode QR dengan template DANA
 const [qrString, transactionId, qrImagePath] = await saweriaQris.createPaymentQr(
     'nama_saweria',    // Nama pengguna Saweria Anda
-    10000,             // Jumlah dalam IDR (minimum 10000)
+    10000,             // Jumlah dalam IDR (minimum 1000)
     'donatur@email.com' // Email donatur
 );
 
@@ -43,7 +43,7 @@ Membuat kode pembayaran QRIS dan menghasilkan gambar QR.
 
 #### Parameter:
 - `saweriaUsername` (string) - Nama pengguna Saweria Anda
-- `amount` (number) - Jumlah donasi dalam IDR (minimum 10000)
+- `amount` (number) - Jumlah donasi dalam IDR (minimum 1000)
 - `email` (string) - Alamat email donatur
 - `outputPath` (string, opsional) - Path untuk gambar QR code (default: 'qris.png')
 - `useTemplate` (boolean, opsional) - Apakah akan menggunakan template DANA (default: true)
@@ -68,13 +68,75 @@ Promise yang mengembalikan `boolean` - `true` jika sudah dibayar, `false` jika b
 ### Membuat TestFull
 
 ```javascript
-WATING
+const saweriaQris = require('qris-saweria')
+
+async function waitForPayment(transactionId, checkInterval = 5000) {
+    console.log('Menunggu pembayaran...');
+    
+    while (true) {
+        try {
+            const isPaid = await saweriaQris.paidStatus(transactionId);
+            if (isPaid) {
+                console.log('\n✅ Pembayaran berhasil!');
+                break;
+            } else {
+                process.stdout.write('.');
+            }
+        } catch (error) {
+            console.error('\nError:', error.message);
+            break;
+        }
+        
+        // Tunggu sebelum cek lagi
+        await new Promise(resolve => setTimeout(resolve, checkInterval));
+    }
+}
+
+async function test() {
+    try {
+        const amount = 1000; // Minimum 1.000 IDR
+        console.log(`\nMembuat QR code untuk pembayaran ${amount} IDR...`);
+        
+        // Dengan template (default)
+        const [, transactionId, qrImagePath] = await saweriaQris.createPaymentQr(
+            'UserBotTelegram',  // saweria username
+            amount,             // amount (minimum 1000)
+            'test@example.com', // sender email
+            'qris_with_template.png', // output dengan template
+            true // gunakan template
+        );
+        
+        // Tanpa template
+        await saweriaQris.createPaymentQr(
+            'UserBotTelegram',
+            amount,
+            'test@example.com',
+            'qris_no_template.png', // output tanpa template
+            false // tidak gunakan template
+        );
+        
+        console.log('\nQR Code berhasil dibuat!');
+        console.log('QR dengan template:', qrImagePath);
+        console.log('QR tanpa template: qris_no_template.png');
+        console.log('Transaction ID:', transactionId);
+        console.log('\nSilakan scan QR code untuk melakukan pembayaran.');
+        
+        // Mulai polling status pembayaran
+        await waitForPayment(transactionId);
+        
+    } catch (error) {
+        console.error('Error:', error.message);
+    }
+}
+
+// Jalankan test
+test(); 
 ```
 
 ### Membuat QR dengan Template
 
 ```javascript
-const saweriaQris = require('saweria-qris');
+const saweriaQris = require('qris-saweria')
 
 async function createPayment() {
     try {
@@ -109,7 +171,7 @@ const [, transactionId, qrPath] = await saweriaQris.createPaymentQr(
 ### Memantau Status Pembayaran
 
 ```javascript
-const saweriaQris = require('saweria-qris');
+const saweriaQris = require('qris-saweria')
 
 async function checkPayment(transactionId) {
     while (true) {
