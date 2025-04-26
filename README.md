@@ -1,6 +1,6 @@
 # Saweria QRIS Generator
 <p align="center">
-  <img src="qriss.png" alt="QRIS Logo" width="150"/>
+  <img src="https://github.com/AutoFTbot/Qris-OrderKuota/blob/main/qriss.png?raw=true" alt="QRIS Logo" width="150"/>
 </p>
 
 [![NPM Version](https://img.shields.io/npm/v/qris-saweria.svg)](https://www.npmjs.com/package/qris-saweria)
