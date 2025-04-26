@@ -1,6 +1,7 @@
 # Saweria QRIS Generator
-
-API tidak resmi saweria.co untuk membuat dan memeriksa QRIS secara otomatis.
+<p align="center">
+  <img src="qriss.png" alt="QRIS Logo" width="150"/>
+</p>
 
 [![NPM Version](https://img.shields.io/npm/v/qris-saweria.svg)](https://www.npmjs.com/package/qris-saweria)
 [![PyPI version](https://img.shields.io/pypi/v/qris-saweria.svg)](https://pypi.org/project/qris-saweria/)
