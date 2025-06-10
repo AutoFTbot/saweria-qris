@@ -51,7 +51,7 @@ const saweriaQris = require('qris-saweria');
 const [qrString, transactionId, qrImagePath] = await saweriaQris.createPaymentQr(
     'nama_saweria',
     10000,
-    'donatur@email.com',
+    'donatur@gmail.com',
     'qris_template.png', // output file
     true                // gunakan template (default: true)
 );
@@ -61,7 +61,7 @@ console.log('QRIS dengan template:', qrImagePath);
 const [qrString2, transactionId2, qrImagePath2] = await saweriaQris.createPaymentQr(
     'nama_saweria',
     10000,
-    'donatur@email.com',
+    'donatur@gmail.com',
     'qris_only.png',
     false               // tanpa template
 );
@@ -83,7 +83,7 @@ from qris_saweria import create_payment_qr, check_paid_status
 qr_string, transaction_id, qr_path = create_payment_qr(
     'nama_saweria',
     10000,
-    'donatur@email.com',
+    'donatur@gmail.com',
     'qris_template.png',  # output file
     True                 # pakai template (default: True)
 )
@@ -93,7 +93,7 @@ print('QRIS dengan template:', qr_path)
 qr_string2, transaction_id2, qr_path2 = create_payment_qr(
     'nama_saweria',
     10000,
-    'donatur@email.com',
+    'donatur@gmail.com',
     'qris_only.png',
     False                # tanpa template
 )
